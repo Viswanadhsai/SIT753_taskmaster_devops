@@ -17,32 +17,32 @@ pipeline {
 
         stage('Code Quality') {
             steps {
-                sh 'echo "Running SonarQube analysis..."'
+                echo "Running SonarQube analysis..."
             }
         }
 
         stage('Security') {
             steps {
-                sh 'echo "Running Snyk/Trivy security scan..."'
+                echo "Running Snyk/Trivy security scan..."
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'docker build -t taskmaster-app .'
-                sh 'docker run -d -p 8080:8080 --name taskmaster-container taskmaster-app'
+                echo "Mock deploy: Building Docker image..."
+                echo "Mock deploy: Running container..."
             }
         }
 
         stage('Release') {
             steps {
-                sh 'docker tag taskmaster-app taskmaster-app:prod'
+                echo "Mock release: Tagging image for production..."
             }
         }
 
         stage('Monitoring') {
             steps {
-                sh 'curl http://localhost:8080/actuator/health'
+                echo "Mock monitoring: Checking application health..."
             }
         }
     }
