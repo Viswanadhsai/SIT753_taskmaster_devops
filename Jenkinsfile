@@ -47,7 +47,7 @@ pipeline {
             steps {
 
                 echo "Building Docker image..."
-                sh 'docker build -t myapp:latest . || true'
+                sh 'DOCKER_BUILDKIT=0 docker build -t myapp:latest .'
 
                 echo "Running Docker container..."
                 sh 'docker run --rm myapp:latest || true'
