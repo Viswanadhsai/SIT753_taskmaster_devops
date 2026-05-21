@@ -47,10 +47,10 @@ pipeline {
             steps {
 
                 echo "Building Docker image..."
-                sh 'DOCKER_BUILDKIT=0 docker build -t myapp:latest .'
+                sh 'docker build -t myapp:latest .'
 
-                echo "Running Docker container..."
-                sh 'docker run --rm myapp:latest || true'
+                echo "Running Docker container in background..."
+                sh 'docker run -d --rm --name myapp_container myapp:latest'
             }
         }
 
