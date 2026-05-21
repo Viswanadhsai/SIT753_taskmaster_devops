@@ -3,31 +3,47 @@ pipeline {
 
     stages {
 
-        stage('Build') {
-            steps {
-                echo "Building application..."
-                sh 'sleep 2'
+        stage('Build & Test') {
+            parallel {
+                stage('Build') {
+                    steps {
+                        echo "Building with Maven..."
+                        sh 'mvn clean package -DskipTests'
+                    }
+                }
+                stage('Test') {
+                    steps {
+                        echo "Running tests..."
+                        sh 'mvn test'
+                    }
+                }
             }
         }
 
-        stage('Test') {
-            steps {
-                echo "Running tests..."
-                sh 'sleep 2'
+        stage('Quality Gates') {
+            parallel {
+                stage('Code Quality') {
+                    steps {
+                        echo "Running code quality checks..."
+                        sh 'mvn verify'
+                    }
+                }
+                stage('Security Scan') {
+                    steps {
+                        echo "Running security scan..."
+                        sh 'mvn org.owasp:dependency-check-maven:check'
+                    }
+                }
             }
         }
 
-        stage('Code Quality') {
+        stage('Docker Build & Run') {
             steps {
-                echo "Checking code quality..."
-                sh 'sleep 2'
-            }
-        }
+                echo "Building Docker image..."
+                sh 'docker build -t myapp:latest .'
 
-        stage('Security') {
-            steps {
-                echo "Running security scan..."
-                sh 'sleep 2'
+                echo "Running Docker container..."
+                sh 'docker run --rm myapp:latest'
             }
         }
 
