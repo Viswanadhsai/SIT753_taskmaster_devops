@@ -6,7 +6,7 @@ pipeline {
         stage('Build') {
             steps {
                 dir('demo/demo') {
-                    sh './mvnw clean package -DskipTests'
+                    sh 'bash mvnw clean package -DskipTests'
                 }
             }
         }
@@ -14,7 +14,7 @@ pipeline {
         stage('Test') {
             steps {
                 dir('demo/demo') {
-                    sh './mvnw test'
+                    sh 'bash mvnw test'
                 }
             }
         }
@@ -22,7 +22,7 @@ pipeline {
         stage('Code Quality') {
             steps {
                 dir('demo/demo') {
-                    sh './mvnw checkstyle:check'
+                    sh 'bash mvnw checkstyle:check'
                 }
             }
         }
@@ -30,7 +30,7 @@ pipeline {
         stage('Security') {
             steps {
                 dir('demo/demo') {
-                    sh './mvnw dependency-check:check'
+                    sh 'bash mvnw dependency-check:check'
                 }
             }
         }
