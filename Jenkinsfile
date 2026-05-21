@@ -5,53 +5,45 @@ pipeline {
 
         stage('Build') {
             steps {
-                dir('demo/demo') {
-                    sh 'bash mvnw clean package -DskipTests'
-                }
+                sh 'bash demo/demo/mvnw clean package -DskipTests'
             }
         }
 
         stage('Test') {
             steps {
-                dir('demo/demo') {
-                    sh 'bash mvnw test'
-                }
+                sh 'bash demo/demo/mvnw test'
             }
         }
 
         stage('Code Quality') {
             steps {
-                dir('demo/demo') {
-                    sh 'bash mvnw checkstyle:check'
-                }
+                sh 'bash demo/demo/mvnw checkstyle:check'
             }
         }
 
         stage('Security') {
             steps {
-                dir('demo/demo') {
-                    sh 'bash mvnw dependency-check:check'
-                }
+                sh 'bash demo/demo/mvnw dependency-check:check'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploying application to local/test environment...'
+                echo "Deploying application to local/test environment..."
                 sh 'sleep 3'
             }
         }
 
         stage('Release') {
             steps {
-                echo 'Promoting build to release version...'
+                echo "Promoting build to release version..."
                 sh 'sleep 2'
             }
         }
 
         stage('Monitoring') {
             steps {
-                echo 'Checking application health...'
+                echo "Checking application health..."
                 sh 'curl -s http://localhost:8080/actuator/health || true'
             }
         }
@@ -59,10 +51,10 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline completed successfully!'
+            echo "Pipeline completed successfully!"
         }
         failure {
-            echo 'Pipeline failed!'
+            echo "Pipeline failed!"
         }
     }
 }
