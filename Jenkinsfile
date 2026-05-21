@@ -5,25 +5,38 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'bash demo/demo/mvnw clean package -DskipTests'
+                sh '''
+                cd demo
+                chmod +x mvnw
+                ./mvnw clean package -DskipTests
+                '''
             }
         }
 
         stage('Test') {
             steps {
-                sh 'bash demo/demo/mvnw test'
+                sh '''
+                cd demo
+                ./mvnw test
+                '''
             }
         }
 
         stage('Code Quality') {
             steps {
-                sh 'bash demo/demo/mvnw checkstyle:check'
+                sh '''
+                cd demo
+                ./mvnw checkstyle:check
+                '''
             }
         }
 
         stage('Security') {
             steps {
-                sh 'bash demo/demo/mvnw dependency-check:check'
+                sh '''
+                cd demo
+                ./mvnw dependency-check:check
+                '''
             }
         }
 
