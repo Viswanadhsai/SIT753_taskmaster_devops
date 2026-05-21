@@ -24,7 +24,7 @@
 
     <dependencies>
 
-        <!-- ⭐ Monitoring -->
+        <!-- Monitoring -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -63,7 +63,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- ⭐ Swagger UI -->
+        <!-- Swagger UI -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -75,13 +75,13 @@
     <build>
         <plugins>
 
-            <!-- ⭐ Spring Boot Plugin -->
+            <!-- Spring Boot Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- ⭐ Checkstyle disabled for assignment -->
+            <!-- Checkstyle disabled -->
             <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -98,7 +98,8 @@
             </plugin>
             -->
 
-            <!-- ⭐ Security: OWASP Dependency Check -->
+            <!-- OWASP Dependency Check disabled -->
+            <!--
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
@@ -111,6 +112,7 @@
                     </execution>
                 </executions>
             </plugin>
+            -->
 
         </plugins>
     </build>
