@@ -29,8 +29,13 @@ pipeline {
 
                 stage('Code Quality') {
                     steps {
-                        echo "Code quality stage simulated..."
-                        sh 'echo "Checkstyle configured successfully"'
+                        sh """
+                        mvn sonar:sonar \
+                        -Dsonar.projectKey=taskmaster \
+                        -Dsonar.host.url=http://host.docker.internal:9000 \
+                        -Dsonar.login=admin \
+                        -Dsonar.password=admin
+                        """
                     }
                 }
 
@@ -49,12 +54,10 @@ pipeline {
                 echo "Building Docker image..."
                 sh 'docker build -t myapp:latest .'
 
-                echo "Stopping old container if exists..."
-                sh 'docker stop myapp_container || true'
-                sh 'docker rm myapp_container || true'
-
                 echo "Running Docker container in background..."
                 sh 'docker run -d --rm --name myapp_container myapp:latest'
+
+                echo "Container started successfully."
             }
         }
 
